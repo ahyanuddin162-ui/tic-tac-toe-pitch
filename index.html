@@ -1,34 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tic Tac Toe: Pitch Edition</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #14183a;
-      color: #fff;
-      text-align: center;
-      padding: 60px 20px;
-    }
-    a.button {
-      display: inline-block;
-      margin: 10px;
-      padding: 14px 28px;
-      background: #2ea043;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 18px;
-    }
-    a.button:hover { background: #3fb950; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tic Tac Toe: Pitch Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;1,700;1,800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --a: #2f8f4e; --b: #277a43; --chalk: #f7f5ee; --gold: #ffd23f; --ink: #0c3a1e;
+    --face: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh;
+    color: var(--chalk);
+    font-family: var(--face);
+    text-transform: uppercase;
+    background: repeating-linear-gradient(90deg, var(--a) 0 90px, var(--b) 90px 180px);
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 50% 42%, rgba(255,255,255,.16), transparent 55%),
+                radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(5,35,16,.6) 100%);
+  }
+  body::after {
+    content: ""; position: fixed; inset: 14px; pointer-events: none;
+    border: 4px solid var(--chalk); border-radius: 4px;
+  }
+  .stage {
+    position: relative; z-index: 1; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: clamp(14px, 3vh, 28px); padding: 44px 28px; text-align: center;
+  }
+  h1 {
+    margin: 0; font-style: italic; font-weight: 800;
+    font-size: clamp(3rem, 13vw, 7rem); line-height: .9; letter-spacing: .01em;
+    text-shadow: 0 4px 0 rgba(8,40,20,.4);
+  }
+  .sub {
+    margin: 10px 0 0; display: flex; align-items: center; justify-content: center; gap: 16px;
+    font-weight: 600; font-size: clamp(1.1rem, 4vw, 1.6rem); letter-spacing: .32em;
+  }
+  .sub::before, .sub::after { content: ""; width: clamp(28px, 8vw, 70px); height: 3px; background: var(--chalk); }
+  .mid { position: relative; align-self: stretch; margin: 0 -14px; display: flex; justify-content: center; }
+  .mid::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 4px; background: var(--chalk); transform: translateY(-50%); }
+  .circle {
+    position: relative; width: clamp(220px, min(72vw, 40vh), 400px); aspect-ratio: 1;
+    display: grid; place-items: center; border: 4px solid var(--chalk); border-radius: 50%;
+    background: rgba(9,48,24,.62); box-shadow: 0 0 0 6px rgba(9,48,24,.25);
+  }
+  svg { width: 78%; height: auto; overflow: visible; }
+  svg * { fill: none; stroke-linecap: round; }
+  .g { stroke: var(--chalk); stroke-width: 2.2; }
+  .m { stroke: var(--chalk); stroke-width: 3.2; }
+  .o { stroke: var(--gold); stroke-width: 3.2; }
+  .w { stroke: var(--gold); stroke-width: 2.6; filter: drop-shadow(0 0 3px rgba(255,210,63,.9)); }
+  .d { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw .45s ease-out forwards var(--t, 0s); }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .play {
+    padding: 16px 56px; border-radius: 999px; background: var(--chalk); color: var(--ink);
+    font-style: italic; font-weight: 700; font-size: clamp(1.5rem, 5vw, 2rem); letter-spacing: .08em;
+    text-decoration: none; box-shadow: 0 6px 0 rgba(8,40,20,.5);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .play:hover { transform: translateY(-2px); box-shadow: 0 8px 0 rgba(8,40,20,.5); }
+  .play:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(8,40,20,.5); }
+  .play:focus-visible { outline: 4px solid var(--gold); outline-offset: 4px; }
+  footer { font-style: italic; font-weight: 700; font-size: clamp(1.1rem, 4vw, 1.5rem); letter-spacing: .08em; }
+  @media (prefers-reduced-motion: reduce) { .d { animation: none; stroke-dashoffset: 0; } .play { transition: none; } }
+</style>
 </head>
 <body>
-  <h1>Tic Tac Toe: Pitch Edition</h1>
-  <p>Play it in your browser, or download it to keep.</p>
-  <a class="button" href="tic-tac-toe.html">Play online</a>
-  <a class="button" href="tic-tac-toe.html" download="tic-tac-toe.html">Download the game</a>
+  <main class="stage">
+    <header>
+      <h1>Tic Tac Toe</h1>
+      <p class="sub">Pitch Edition</p>
+    </header>
+    <div class="mid">
+      <div class="circle">
+        <svg viewBox="0 0 100 100" role="img" aria-label="Tic tac toe board where X wins on the diagonal">
+          <line class="g d" pathLength="1" style="--t:0s" x1="38" y1="14" x2="38" y2="86"/>
+          <line class="g d" pathLength="1" style="--t:.15s" x1="62" y1="14" x2="62" y2="86"/>
+          <line class="g d" pathLength="1" style="--t:.3s" x1="14" y1="38" x2="86" y2="38"/>
+          <line class="g d" pathLength="1" style="--t:.45s" x1="14" y1="62" x2="86" y2="62"/>
+          <path class="m d" pathLength="1" style="--t:.9s" d="M19 19L33 33M33 19L19 33"/>
+          <circle class="o d" pathLength="1" style="--t:1.2s" cx="50" cy="26" r="7"/>
+          <path class="m d" pathLength="1" style="--t:1.5s" d="M43 43L57 57M57 43L43 57"/>
+          <circle class="o d" pathLength="1" style="--t:1.8s" cx="26" cy="50" r="7"/>
+          <path class="m d" pathLength="1" style="--t:2.1s" d="M67 67L81 81M81 67L67 81"/>
+          <line class="w d" pathLength="1" style="--t:2.6s" x1="14" y1="14" x2="86" y2="86"/>
+        </svg>
+      </div>
+    </div>
+    <a class="play" href="tic-tac-toe.html">Play online</a>
+    <footer>Coded and designed fully by Ahyan Uddin</footer>
+  </main>
 </body>
 </html>
