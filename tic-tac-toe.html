@@ -35,7 +35,7 @@ button.go{background:var(--acc);color:var(--ai);border-color:var(--acc)}
 #note{margin:8px 2px 0;color:var(--mut);font-size:.9rem}#note:empty{display:none}
 .names{display:flex;gap:8px;margin-top:12px}.names input{flex:1}
 .names input.bad{color:transparent;text-shadow:0 0 8px var(--ink);border-color:#e5484d}
-.names input.dup{border-color:#e5484d}
+.names input.dup{border-color:#e5484d}.names input:disabled{opacity:.6;cursor:not-allowed}
 .warn{color:#e5484d;font-weight:700;margin:6px 2px 0;font-size:.9rem}
 .score{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;margin:14px 0 10px}
 .pc{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:center;padding:10px;background:var(--pan);border:1px solid var(--ln);border-radius:16px;transition:transform .25s,box-shadow .25s,border-color .25s}
@@ -66,7 +66,7 @@ button.go{background:var(--acc);color:var(--ai);border-color:var(--acc)}
 details{margin-top:14px;background:var(--pan);border:1px solid var(--ln);border-radius:16px;padding:2px 12px 12px}
 summary{cursor:pointer;font-weight:700;padding:10px 0;list-style:none}summary::after{content:"▾";float:right}
 .teams{display:flex;gap:8px}.teams button{flex:1;display:flex;align-items:center;gap:8px;padding:8px;border-radius:14px;border:1px solid var(--ln);background:var(--bg);color:var(--ink);font:inherit;font-size:.85rem;font-weight:700;text-align:left;cursor:pointer}.teams button:disabled{opacity:.5;cursor:default}.teams small{display:block;font-weight:500}
-.tb{position:relative;width:38px;flex:none;aspect-ratio:1;container-type:inline-size}.tb .bdg{inset:0;border-width:2px;box-shadow:none;animation:none}.pc{cursor:pointer}
+.tb{position:relative;width:38px;flex:none;aspect-ratio:1;container-type:inline-size}.tb .bdg{inset:0;border-width:2px;box-shadow:none;animation:none}.pc{cursor:pointer}.seg button:disabled{opacity:.5;cursor:default}.pulse{animation:pulse2 1s infinite}@keyframes pulse2{50%{transform:scale(1.04);box-shadow:0 0 0 6px var(--glow)}}
 .credit{text-align:center;margin:18px 0 0;font-weight:700;color:var(--acc)}
 #result{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.55)}
 .card{width:100%;max-width:340px;background:var(--pan);border:1px solid var(--ln);border-radius:22px;padding:26px 20px 20px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.4);animation:pop2 .35s cubic-bezier(.2,1.4,.4,1)}
@@ -74,17 +74,19 @@ summary{cursor:pointer;font-weight:700;padding:10px 0;list-style:none}summary::a
 @keyframes pop2{from{transform:scale(.7);opacity:0}}
 #cf{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
 #fl span{position:fixed;bottom:14vh;z-index:70;font-size:2.6rem;pointer-events:none;animation:fl 1.6s ease-out forwards}@keyframes fl{to{transform:translateY(-45vh) scale(1.3);opacity:0}}
-.chat{margin-top:12px;padding:10px;background:var(--pan);border:1px solid var(--ln);border-radius:16px}
-.log{max-height:150px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.chat{margin-top:12px;padding:14px;background:var(--pan);border:1px solid var(--ln);border-radius:16px}
+.log{height:240px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
 .log:empty::before{content:"No messages yet. Say hi!";color:var(--mut);font-size:.85rem}
-.msg{max-width:85%;padding:6px 10px;border-radius:12px;background:var(--bg);overflow-wrap:anywhere;font-size:.92rem}
+.msg{max-width:88%;padding:8px 12px;border-radius:14px;background:var(--bg);overflow-wrap:anywhere;font-size:1rem}
 .msg.me{align-self:flex-end;background:var(--acc);color:var(--ai)}
 .msg small{display:block;font-size:.7rem;opacity:.8;color:inherit}
-.cin{display:flex;gap:8px}.cin input{flex:1}
-.chat button{padding:10px 14px;border-radius:12px;border:1px solid var(--ln);background:var(--pan);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.cin{display:flex;gap:8px}.cin input{flex:1;padding:13px 14px;font-size:1rem}
+.chat button{padding:12px 18px;border-radius:12px;border:1px solid var(--ln);background:var(--pan);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
 .chat #cs{background:var(--acc);color:var(--ai);border-color:var(--acc)}
 .chat #cm{margin-top:8px;padding:6px 10px;font-size:.8rem;color:var(--mut)}
 .chat button:disabled,.chat input:disabled{opacity:.5;cursor:default}
+.msg.sys{align-self:center;max-width:100%;background:none;color:var(--mut);font-size:.8rem;text-align:center}
+@media(min-width:780px){main.chat-on{max-width:960px;display:grid;grid-template-columns:minmax(0,460px) minmax(260px,1fr);column-gap:24px;align-items:start}main.chat-on>*{grid-column:1}main.chat-on>#chat{grid-column:2;grid-row:1/span 40;position:sticky;top:16px;margin-top:12px}main.chat-on .log{height:min(58vh,520px)}}
 #picker{position:fixed;inset:0;z-index:55;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.6)}#picker .card{max-height:92vh;overflow:auto}
 .tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
 .card .tp{padding:8px 2px;border-radius:14px;border:2px solid var(--ln);background:var(--bg);color:var(--ink);font-size:.7rem;transition:transform .2s,border-color .2s}
@@ -123,6 +125,7 @@ summary{cursor:pointer;font-weight:700;padding:10px 0;list-style:none}summary::a
 <div class="names" id="names" data-for="local online"><input id="p1" maxlength="12" autocomplete="off" aria-label="Player 1 name"><input id="p2" maxlength="12" placeholder="Player 2 name" autocomplete="off" aria-label="Player 2 name" data-for="local"></div>
 <p class="warn" id="warn" role="alert" hidden>⚠️ Watch your language. Allah’s watching you. 👀<br><small>Pick a respectful name.</small></p>
 <p class="warn" id="dupw" role="alert" hidden></p>
+<p class="tip" id="nlock" hidden></p>
 <div class="score">
 <div class="pc" id="cX"><span class="av" id="aX"></span><span class="nm" id="nX"></span><em id="sX">0</em></div>
 <div class="mid"><em id="mid">0</em><small id="midl">Ties</small></div>
@@ -164,12 +167,13 @@ const same=(a,b)=>!!a&&!!b&&a.toLowerCase()===b.toLowerCase();
 const taken=()=>mode==="online"&&!host&&hasOpp&&same(nick($("#p1").value),oppName);
 let myPub="";
 const pubName=()=>taken()?"Guest":(nick($("#p1").value)||"Friend");
-function pubSync(){if(!room)return;const p=pubName();if(p!==myPub){myPub=p;pres({n:p})}}
+function pubSync(){if(!room||(!host&&!oppNameSet))return;const p=pubName();if(p!==myPub){myPub=p;pres({n:p})}}
 function nameOf(w){if(mode==="robot")return w==="X"?"You":"Ahyan’s Robot";if(mode==="online")return w===myMark()?(taken()?"Guest":nick($("#p1").value)||"You"):oppName;const a=nick($("#p1").value)||"Player 1",b=nick($("#p2").value)||"Player 2";return w==="X"?a:(same(a,b)?"Player 2":b)}
-function dupCheck(){const l=mode==="local"&&same(nick($("#p1").value),nick($("#p2").value)),o=taken();$("#p2").classList.toggle("dup",l);$("#p1").classList.toggle("dup",o);const w=$("#dupw");w.hidden=!(l||o);w.textContent=l?"Both players have the same name. Player 2 shows as “Player 2” until you change it.":o?"That name is already taken in this game, so you show as “Guest”. Pick a different name.":""}
+function dupCheck(){const l=mode==="local"&&same(nick($("#p1").value),nick($("#p2").value)),o=taken();$("#p2").classList.toggle("dup",l);$("#p1").classList.toggle("dup",o);const w=$("#dupw");w.hidden=!(l||o);w.textContent=l?"Both players have the same name. Player 2 shows as “Player 2” until you change it.":o?"That name is already taken in this game, so you’re playing as “Guest”. Leave and rejoin to use a different name.":""}
 const press=(id,v)=>$$("#"+id+" button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===String(v)));
 const note=m=>{$("#note").textContent=m||""};
-let pickW="X",pickSel=0,myReady=false,faced=false,vt=0;
+let pickW="X",pickSel=0,myReady=false,faced=false,vt=0,myQ=-1,oppQ=-1,oppNameSet=false;
+function lockNames(){const r=mode==="online"&&!!room,on=r||(mode==="local"&&!over&&board.some(Boolean));$("#p1").disabled=$("#p2").disabled=on;const n=$("#nlock");n.hidden=!on;n.textContent=r?"🔒 Names are locked while you play. Leave the game to change yours.":"🔒 Names are locked until this game ends."}
 function openPicker(w){pickW=w;const o=w==="X"?"O":"X";$("#pt").textContent=mode==="online"||(mode==="robot"&&w==="X")?"Pick your team":"Pick "+nameOf(w)+"’s team";
 $("#tgrid").innerHTML=TEAMS.map((t,i)=>`<button class="tp" data-i="${i}"${i===tm[o]?" disabled":""}><i>${bdg(i)}</i><span>${t[1]}</span></button>`).join("");
 $$("#tgrid .tp").forEach(b=>b.onclick=()=>choose(+b.dataset.i));choose(tm[w],true);$("#picker").hidden=false;$("#pok").focus()}
@@ -198,12 +202,17 @@ return hit||CSEV.some(w=>squash(L).includes(w))?1:0}
 function addMsg(n,t,me){if(chatMuted&&!me)return;const d=document.createElement("div"),s=document.createElement("small"),L=$("#log");d.className="msg"+(me?" me":"");s.textContent=n;d.append(s,t);L.append(d);while(L.children.length>40)L.firstChild.remove();L.scrollTop=L.scrollHeight}
 function getChat(op){const cs=Array.isArray(op.c)?op.c.filter(m=>m&&Number.isInteger(m.i)&&typeof m.t==="string").slice(-4):[];
 if(!seenOpp){seenOpp=true;lastOppSeq=Math.max(0,...cs.map(m=>m.i));return}
-cs.filter(m=>m.i>lastOppSeq).sort((a,b)=>a.i-b.i).forEach(m=>{lastOppSeq=m.i;const t=m.t.replace(CTL,"").replace(/\s+/g," ").trim().slice(0,80);if(t)addMsg(oppName,chk(t)?"🚫 Message hidden":t,false)})}
+cs.filter(m=>m.i>lastOppSeq).sort((a,b)=>a.i-b.i).forEach(m=>{lastOppSeq=m.i;const t=m.t.replace(CTL,"").replace(/\s+/g," ").trim().slice(0,80);if(t){if(burst(inT)){if(Date.now()-inFlag>3000){inFlag=Date.now();sys("🚩 "+oppName+" is sending too fast. Their messages are paused.")}return}addMsg(oppName,chk(t)?"🚫 Message hidden":t,false)}})}
 function sendChat(){const inp=$("#ci"),t=inp.value.replace(CTL,"").replace(/\s+/g," ").trim().slice(0,80),w=$("#cw");
-if(!t||!room||!hasOpp||Date.now()-lastSend<800)return;
+if(!t||!room||!hasOpp||Date.now()<coolUntil)return;
 const k=chk(t);if(k){w.textContent=k===2?"No links in chat.":"⚠️ Watch your language. Allah’s watching you. 👀 Message not sent.";w.hidden=false;return}
-w.hidden=true;lastSend=Date.now();myChat=[...myChat,{i:++mySeq,t}].slice(-4);pres({c:myChat});addMsg("You",t,true);inp.value=""}
-function chatUI(){const on=mode==="online"&&!!room;$("#chat").hidden=!on;$("#ci").disabled=!hasOpp;$("#cs").disabled=!hasOpp;$("#ci").placeholder=hasOpp?"Say something nice…":"Chat opens when your friend joins"}
+w.hidden=true;if(spam(t)){w.textContent="🚩 Spam flagged. Chat paused for 3 seconds.";w.hidden=false;sys("🚩 You were flagged for spam. Chat paused for 3 seconds.");cool();return}myChat=[...myChat,{i:++mySeq,t}].slice(-4);pres({c:myChat});addMsg("You",t,true);inp.value=""}
+function chatUI(){const on=mode==="online"&&!!room,c=Date.now()<coolUntil;$("#chat").hidden=!on;$("main").classList.toggle("chat-on",on);$("#ci").disabled=$("#cs").disabled=!hasOpp||c;$("#ci").placeholder=hasOpp?"Say something nice…":"Chat opens when your friend joins"}
+let coolUntil=0,sendT=[],lastTxt="",rep=0,inT=[],inFlag=0;
+function burst(a){const n=Date.now();while(a.length&&n-a[0]>5000)a.shift();a.push(n);return a.length>5}
+function spam(t){const l=t.toLowerCase();rep=l===lastTxt?rep+1:0;lastTxt=l;if(burst(sendT)||rep>=3){sendT.length=0;rep=0;return true}return false}
+function sys(t){const d=document.createElement("div"),L=$("#log");d.className="msg sys";d.textContent=t;L.append(d);L.scrollTop=L.scrollHeight}
+function cool(){coolUntil=Date.now()+3000;const b=$("#cs");let n=3;b.textContent="Wait "+n;chatUI();const iv=setInterval(()=>{n--;if(n>0)b.textContent="Wait "+n;else{clearInterval(iv);b.textContent="Send";chatUI();if(!$("#ci").disabled)$("#ci").focus()}},1000)}
 const pres=p=>{room&&room.presence(p).catch(()=>{})};
 /* sound + confetti */
 let ac=null;function tone(f,d,t){if(!sound)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=t||"sine";o.frequency.value=f;g.gain.setValueAtTime(.12,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
@@ -222,7 +231,7 @@ function put(el,w){const k=w?w+skin+ti(w):"";if(el.dataset.k!==k){el.dataset.k=k
 function paint(){cells.forEach((c,i)=>{put(c,board[i]);c.classList.toggle("taken",!!board[i]);c.disabled=!!board[i]})}
 function showScore(){["X","O"].forEach(w=>{$("#n"+w).textContent=nameOf(w);put($("#a"+w),w);$("#s"+w).textContent=mode==="online"?(w===myMark()?myW:oppW):score[w]});
 $("#mid").textContent=mode==="online"?myR+1:score.T;$("#midl").textContent=mode==="online"?"Round":"Ties";
-const act=!over&&(mode!=="online"||hasOpp);$("#cX").classList.toggle("on",act&&turn==="X");$("#cO").classList.toggle("on",act&&turn==="O");dupCheck()}
+const act=!over&&(mode!=="online"||hasOpp);$("#cX").classList.toggle("on",act&&turn==="X");$("#cO").classList.toggle("on",act&&turn==="O");dupCheck();lockNames()}
 function status(){if(over)return;let s;if(mode==="online")s=!room?"Create a game or join with a code":!hasOpp?(everHad?oppName+" left the game":host?"Waiting for a friend to join…":"Connecting…"):turn===myMark()?"Your turn":oppName+"’s turn";
 else s=mode==="robot"?(turn==="X"?"Your turn":"🤖 Thinking…"):nameOf(turn)+"’s turn";$("#status").textContent=s;showScore()}
 /* logic */
@@ -246,28 +255,32 @@ if(r.w&&mine){confetti();tone(660,.15);setTimeout(()=>tone(880,.25),160)}else to
 showScore();result(r)}
 function result(r){const n=r.w&&nameOf(r.w);let e=r.w?(mode==="robot"&&r.w==="O"?"🤖":"🏆"):"🤝",t=r.w?n+" "+V(n)+"!":"It’s a tie!",m=r.w?"Good game! Ready for another?":"Evenly matched. One more?";
 if(mode!=="online"&&match&&(score.X>=3||score.O>=3)){const k=nameOf(score.X>=3?"X":"O");e="🏆";t=k+" "+V(k)+" the match!";m="Final score "+score.X+" to "+score.O+". A new match starts next.";mdone=true}
-$("#re").textContent=e;$("#rt").textContent=t;$("#rm").textContent=m;clearTimeout(rtm);rtm=setTimeout(()=>{$("#result").hidden=false;$("#again2").focus()},r.w?1000:500)}
-function newGame(){gen++;clearTimeout(rtm);$("#result").hidden=true;
-if(mode==="online"&&room)return newRound();
+$("#re").textContent=e;$("#rt").textContent=t;$("#rm").textContent=$("#rm").dataset.b=m;clearTimeout(rtm);rtm=setTimeout(()=>{$("#result").hidden=false;$("#again2").focus()},r.w?1000:500)}
+function newGame(){if(mode==="online"&&room)return newRound();gen++;clearTimeout(rtm);$("#result").hidden=true;
 if(mdone){score={X:0,T:0,O:0};mdone=false}
 board=Array(N).fill(null);over=false;busy=false;$("#ln").innerHTML="";cells.forEach(c=>c.classList.remove("win"));
 turn=starter;starter=starter==="X"?"O":"X";paint();status();if(mode==="robot"&&turn==="O")bot()}
 /* online (room presence carries each player's full state, so dropped updates self-heal) */
-function newRound(){myR=Math.max(myR,oppR)+1;myMv=[];pres({r:myR,mv:[]});sync()}
+function newRound(){if(!hasOpp)return;if(myQ===myR){myQ=-1;pres({q:null})}else{myQ=myR;pres({q:myQ})}sync()}
+function reUI(){if(mode!=="online"||!room)return;const a=myQ===myR,b=hasOpp&&oppQ===myR&&!a,t=a?"Waiting for "+oppName+"… (tap to cancel)":b?"Accept rematch":"Play again",m=oppName+" wants to restart. Tap Accept rematch.";
+["#again","#again2"].forEach(s=>{$(s).textContent=t;$(s).classList.toggle("pulse",b)});
+if(over)$("#rm").textContent=a?"Waiting for "+oppName+" to say yes…":b?oppName+" wants to play again!":($("#rm").dataset.b||"");
+if(b&&(!over||$("#result").hidden))note(m);else if($("#note").textContent===m)note("")}
 function sync(){if(!room)return;
 const P=room.peers().filter(p=>!p.isMe&&p.presence&&p.presence.h!==undefined),o=P.find(p=>p.presence.h===(host?0:1)),op=o?o.presence:{},om=host?"O":"X";
 hasOpp=!!o;if(o)everHad=true;chatUI();
 if(!host&&o&&(op.z===3||op.z===4)&&op.z!==size)build(op.z);
-if(o){oppName=nick(String(op.n||""))||"Friend";oppW=+op.w||0;oppR=+op.r||0;if(Number.isInteger(op.t)&&op.t>=0&&op.t<TEAMS.length){if(tm[om]!==op.t){tm[om]=op.t;teamBtns()}}
+if(o){if(!oppNameSet&&typeof op.n==="string"&&op.n.trim()){oppName=nick(op.n)||"Friend";oppNameSet=true}oppW=+op.w||0;oppR=+op.r||0;oppQ=Number.isInteger(op.q)?op.q:-1;if(Number.isInteger(op.t)&&op.t>=0&&op.t<TEAMS.length){if(tm[om]!==op.t){tm[om]=op.t;teamBtns()}}
 if(op.et&&op.et!==lastEt){lastEt=op.et;if(EM.includes(op.e)&&Date.now()-o.updatedAt<3000)float(op.e)}getChat(op)}
-if(!o)faced=false;else if(myReady&&op.k===1&&!faced){faced=true;faceOff()}
-pubSync();if(oppR>myR){myR=oppR;myMv=[];pres({r:myR,mv:[]});$("#result").hidden=true}
+if(!o){faced=false;oppQ=-1;myQ=-1;oppNameSet=false}else if(myReady&&op.k===1&&!faced){faced=true;faceOff()}
+pubSync();if(o&&myQ===myR&&oppQ===myR&&oppR===myR){myR++;myQ=-1;myMv=[];pres({r:myR,mv:[],q:null});$("#result").hidden=true}
+if(oppR>myR){myR=oppR;myMv=[];pres({r:myR,mv:[]});$("#result").hidden=true}
 const ok=a=>Array.isArray(a)?[...new Set(a)].filter(i=>Number.isInteger(i)&&i>=0&&i<N).slice(0,(N>>1)+1):[],th=o&&oppR===myR?ok(op.mv):[],xm=host?myMv:th,ym=host?th:myMv;
 board=Array(N).fill(null);xm.forEach(i=>board[i]="X");ym.forEach(i=>{if(!board[i])board[i]="O"});
 const st=myR%2?"O":"X",c=xm.length+ym.length;turn=c%2?(st==="X"?"O":"X"):st;
 paint();const r=check();
 if(r){if(!over)end(r)}else if(over){over=false;$("#ln").innerHTML="";cells.forEach(e=>e.classList.remove("win"))}
-status()}
+status();reUI()}
 function mkRoom(peer){let conn=null,mine={},opp=null,at=0;const ls=[],fire=()=>ls.slice().forEach(f=>{try{f()}catch(e){}}),send=()=>{if(conn&&conn.open)try{conn.send({p:mine})}catch(e){}};
 function attach(c){conn=c;c.on("data",d=>{if(conn!==c||!d||typeof d!=="object"||!d.p||typeof d.p!=="object")return;try{if(JSON.stringify(d.p).length>6000)return}catch(e){return}opp=d.p;at=Date.now();fire()});
 c.on("close",()=>{if(conn===c){conn=null;opp=null;fire()}});c.on("error",()=>{});if(c.open)send();else c.on("open",send)}
@@ -282,8 +295,8 @@ async function goOnline(c,asHost){
 if(!window.Peer)return note("Online play couldn’t load. Check your internet connection and refresh the page.");
 note("Connecting…");$("#create").disabled=$("#join").disabled=true;
 let r;try{r=await openRoom(c,asHost)}catch(e){return e.message==="taken"?"taken":note(e.message)}finally{$("#create").disabled=$("#join").disabled=false}
-room=r;code=c;host=asHost;myR=oppR=myW=oppW=0;myMv=[];scored=-1;everHad=hasOpp=false;lastEt=0;myChat=[];seenOpp=false;lastOppSeq=0;myReady=faced=false;$("#log").innerHTML="";
-off=r.onPeers(sync);pres({h:asHost?1:0,n:(myPub=pubName()),t:tm[asHost?"X":"O"],r:0,mv:[],w:0,z:size});
+room=r;code=c;host=asHost;myR=oppR=myW=oppW=0;myMv=[];scored=-1;everHad=hasOpp=false;lastEt=0;myChat=[];seenOpp=false;lastOppSeq=0;myReady=faced=false;myQ=oppQ=-1;oppNameSet=false;oppName="Friend";$("#log").innerHTML="";
+off=r.onPeers(sync);myPub="";pres({h:asHost?1:0,t:tm[asHost?"X":"O"],r:0,mv:[],w:0,z:size});pubSync();
 note("");ui();board=Array(N).fill(null);over=false;sync();openPicker(myMark());
 if(!asHost)setTimeout(()=>{if(room===r&&!everHad)leave("No game found for code "+c+".")},5000)}
 function leave(m){if(room){off&&off();room.leave().catch(()=>{});room=null}hasOpp=everHad=false;ui();newGame();note(m||"")}
@@ -292,14 +305,14 @@ function ui(){$$("[data-for]").forEach(e=>e.hidden=!e.dataset.for.split(" ").inc
 const on=mode==="online";$("#lobby").hidden=!on||!!room;$("#roombar").hidden=!on||!room;$("#react").hidden=!(on&&room);chatUI();$("#code").textContent=code;
 press("modes",mode);$("#p1").placeholder=on?"Your name":"Player 1 name";$("#again").textContent=on&&room?"Play again":"New game";
 teamBtns();
-$("#tX").disabled=on&&!!room&&!host;$("#tO").disabled=on&&!!room&&host;
+$$("#sizes button").forEach(b=>b.disabled=on&&!!room);$("#tX").disabled=on&&!!room&&!host;$("#tO").disabled=on&&!!room&&host;
 $("#tip").textContent=match&&!on?"Best of 5: first to win 3 games takes the match.":size===3?"Tap a square, or press keys 1 to 9.":"Tap a square to play."}
 function setMode(m){if(room)leave();mode=m;score={X:0,T:0,O:0};mdone=false;starter="X";note("");ui();newGame()}
 function setSkin(s){skin=s;document.documentElement.dataset.skin=s;press("skins",s);$("#teams").hidden=s!=="pitch";try{localStorage.setItem("ttt-skin",s)}catch(e){}paint();showScore()}
 const seg=(id,fn)=>$$("#"+id+" button").forEach(b=>b.onclick=()=>fn(b.dataset.v));
 seg("modes",setMode);
 seg("levels",v=>{level=v;press("levels",v);try{localStorage.setItem("ttt-level",v)}catch(e){}starter="X";newGame()});
-seg("sizes",v=>{if(room&&!host)return;build(+v);if(room)pres({z:+v});starter="X";ui();newGame()});
+seg("sizes",v=>{if(room)return;build(+v);starter="X";ui();newGame()});
 seg("matchSeg",v=>{match=v==="1";press("matchSeg",v);score={X:0,T:0,O:0};mdone=false;starter="X";ui();newGame()});
 seg("skins",setSkin);
 ["X","O"].forEach(w=>$("#t"+w).onclick=()=>openPicker(w));$("#pok").onclick=lock;
